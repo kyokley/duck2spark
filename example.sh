@@ -7,7 +7,7 @@ echo
 echo "Needs encoder.jar to be present, which could be found at:"
 echo "https://github.com/hak5darren/USB-Rubber-Ducky"
 
-java -jar encoder.jar -i example.duck -o example.bin -l de
+java -jar duckencoder.jar -i example.duck -o example.bin -l de
 
 # generate Sketch from example.bin, loop 4 times, initial delay 2,5 seconds
 # delay between loop iterations 3 seconds
