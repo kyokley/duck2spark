@@ -10,17 +10,15 @@ echo "https://github.com/hak5darren/USB-Rubber-Ducky"
 filepath="$1"
 filedir="$(dirname $filepath)"
 extension="${filepath##*.}"
-filename="${filepath%.*}"
+filename="$(basename $filepath .$extension)"
 
 binpath="$filedir/$filename.bin"
 inopath="$filedir/$filename.ino"
 
-java -jar duckencoder.jar -i $filepath -o $binpath -l en
+java -jar duckencoder.jar -i $filepath -o $binpath
 
-# generate Sketch from example.bin, loop 4 times, initial delay 2,5 seconds
-# delay between loop iterations 3 seconds
-python duck2spark.py -i $binpath --loopcount 1 --initdelay 1000 --repeatdelay 5000 -o $inopath
+python duck2spark.py -i $binpath --loopcount 5 --initdelay 1000 --repeatdelay 5000 -o $inopath
 
 rm $binpath
 
-echo "Example Sketch saved to: $binpath"
+echo "Example Sketch saved to: $inopath"
