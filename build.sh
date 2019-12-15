@@ -17,7 +17,7 @@ inopath="$filedir/$filename.ino"
 
 java -jar duckencoder.jar -i $filepath -o $binpath
 
-python duck2spark.py -i $binpath --loopcount 5 --initdelay 1000 --repeatdelay 5000 -o $inopath
+python duck2spark.py -i $binpath --loopcount 1 --initdelay 1000 --repeatdelay 5000 -o $inopath
 
 rm $binpath
 
